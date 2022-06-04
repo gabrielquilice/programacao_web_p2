@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/P2">
+    <Resource 
+        auth="Container" 
+        driverClassName="com.mysql.jdbc.Driver"
+        maxActive="15" 
+        maxIdle="3" 
+        name="jdbc/mwgames" 
+        password="mysql" 
+        type="javax.sql.DataSource" 
+        url="jdbc:mysql://localhost:3307/mwgames" 
+        username="root"/>
+</Context>
