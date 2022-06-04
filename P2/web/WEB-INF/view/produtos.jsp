@@ -5,13 +5,6 @@
 <sql:query var="rs" dataSource="jdbc/mwgames">
     select * from produto
 </sql:query>
-<style>
-    #div1{
-        margin: 0 auto;
-        width: 80%;
-    }
-</style>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,10 +12,23 @@
         <link href="css/produtos.css" rel="stylesheet" />
         <link href="css/modals.css" rel="stylesheet" />
         <title>Produtos</title>
+
+        <style>
+            #div1{
+                margin: 0 auto;
+                width: 80%;
+                min-height: 65vh; /* 65% da altura da tela */
+            }
+        </style>
     </head>
     <body>
         <div id="div1">
-            <h1>Lista de produtos</h1>
+            <div class="titulo-container">
+                <h1>Lista de produtos</h1>
+                <a href="/P2/produtoForm">
+                    <button type="button" class="custom-button custom-button-blue">Cadastrar produto</button>
+                </a>
+            </div>
 
             <br />
 
@@ -35,8 +41,8 @@
                             <h2>R$ ${row.preco}</h2>
                         </div>
                         <div class="botoes-container">
-                            <button type="button">Editar</button>
-                            <button type="button" onclick="showModal('modalSheet-${row.idproduto}')">Excluir</button>
+                            <button type="button" class="custom-button">Editar</button>
+                            <button type="button" class="custom-button" onclick="showModal('modalSheet-${row.idproduto}')">Excluir</button>
                         </div>
                     </div>
                 </div>

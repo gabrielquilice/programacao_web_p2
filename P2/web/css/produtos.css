@@ -1,3 +1,10 @@
+.titulo-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .card-produto {
   height: 200px;
   width: 100%;
@@ -51,7 +58,7 @@
   text-align: end;
 }
 
-.botoes-container button {
+.custom-button {
   border: none;
   outline: none;
   padding: 10px;
@@ -60,7 +67,11 @@
   margin-bottom: 5px;
 }
 
-.botoes-container button:hover {
+.custom-button:hover {
   background-color: #212529;
   color: white;
+}
+
+.custom-button-blue:hover {
+  background-color: #0d6efd;
 }

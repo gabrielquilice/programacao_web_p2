@@ -4,7 +4,7 @@
  */
 package dao;
 
-import bean.Actor;
+import bean.Produto;
 import bean.Film;
 import java.sql.SQLException;
 import java.util.List;

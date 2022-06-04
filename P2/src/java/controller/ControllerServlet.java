@@ -4,8 +4,8 @@
  */
 package controller;
 
-import bean.Actor;
-import dao.ActorDAO;
+import bean.Produto;
+import dao.ProdutoDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/produtos",
-    "/actorForm", "/saveActorForm", "/findFilmByActor", "/selectFilmsByActor"})
+    "/produtoForm", "/saveProdutoForm", "/findFilmByActor", "/selectFilmsByActor"})
 public class ControllerServlet extends HttpServlet {
 
     String param = "";
@@ -38,8 +38,8 @@ public class ControllerServlet extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
 
         }
-        if (userPath.equals("/actorForm")) {
-            String url = "/WEB-INF/view/actorForm.jsp";
+        if (userPath.equals("/produtoForm")) {
+            String url = "/WEB-INF/view/produtoForm.jsp";
             request.getRequestDispatcher(url).forward(request, response);
         }
 
@@ -66,37 +66,38 @@ public class ControllerServlet extends HttpServlet {
 
         String userPath = request.getServletPath();
         if (userPath.equals("/selectFilmsByActor")) {
-
             request.getRequestDispatcher("/WEB-INF/view/queryFilmsById.jsp?idPessoa=" + request.getParameter("idPessoa")).forward(request, response);
-
-        }
-        if (userPath.equals("/saveActorForm")) {
-
-            Actor actor = new Actor();
-            actor.setFirst_name(request.getParameter("first_name"));
-            actor.setLast_name(request.getParameter("last_name"));
-            actor.setLast_update(new Timestamp(System.currentTimeMillis()));
-
-            ActorDAO dao = new ActorDAO();
-            try {
-                dao.saveActor(actor);
-                //codigo para passar uma confirmação de cadastro para ser exibido uma caixa de sucesso
-                request.setAttribute("p", 1); // Store products in request scope.
-                request.getRequestDispatcher("/WEB-INF/view/actorForm.jsp?p=1").forward(request, response);
-
-            } catch (ClassNotFoundException | SQLException ex) {
-                out.println("<html>");
-                out.println("<title>Olá</title>");
-                out.println("<body>");
-                out.println("<script>alert('Não foi possível salvar os dados! Verifique os Campos!');</script>");
-                out.println("<a href='/WEB-INF/view/actorForm.jsp'>Voltar ao Formulário de Atores");
-                out.println("</body>");
-                out.println("</html>");
-
-                Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
 
+        if (userPath.equals("/saveProdutoForm")) {
+            saveProduto(request, response, out);
+        }
+
+    }
+
+    private void saveProduto(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws ServletException, IOException {
+        Produto produto = new Produto();
+        produto.setNome(request.getParameter("nome"));
+        produto.setPreco(Double.valueOf(request.getParameter("preco")));
+
+        ProdutoDao dao = new ProdutoDao();
+        try {
+            dao.saveProduto(produto);
+            //codigo para passar uma confirmação de cadastro para ser exibido uma caixa de sucesso
+            request.setAttribute("p", 1); // Store products in request scope.
+            request.getRequestDispatcher("/WEB-INF/view/produtoForm.jsp?p=1").forward(request, response);
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            out.println("<html>");
+            out.println("<title>Olá</title>");
+            out.println("<body>");
+            out.println("<script>alert('Não foi possível salvar os dados! Verifique os Campos!');</script>");
+            out.println("<a href='/WEB-INF/view/produtoForm.jsp'>Voltar ao formulário de produtos");
+            out.println("</body>");
+            out.println("</html>");
+
+            Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

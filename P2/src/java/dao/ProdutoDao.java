@@ -4,26 +4,26 @@
  */
 package dao;
 
-import bean.Actor;
+import bean.Produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class ActorDAO {
-     public int saveActor(Actor actor) throws ClassNotFoundException, SQLException {
+public class ProdutoDao {
+     public int saveProduto(Produto produto) throws ClassNotFoundException, SQLException {
         ConexaoDao conexaoDao = new ConexaoDao();
         
-         String INSERT_USERS_SQL = "INSERT INTO actor" +
-            "  (first_name, last_name) VALUES " +
+         String INSERT_USERS_SQL = "INSERT INTO produto" +
+            "  (nome, preco) VALUES " +
             " (?, ?);";
 
         int result = 0;
 
         try (Connection con = conexaoDao.conectar();
             PreparedStatement preparedStatement = con.prepareStatement(INSERT_USERS_SQL)) {
-            preparedStatement.setString(1,actor.getFirst_name());
-            preparedStatement.setString(2, actor.getLast_name());
+            preparedStatement.setString(1,produto.getNome());
+            preparedStatement.setDouble(2, produto.getPreco());
            
             result = preparedStatement.executeUpdate();
 
@@ -34,6 +34,7 @@ public class ActorDAO {
         }
         return result;
     }
+     
      private void printSQLException(SQLException ex) {
         for (Throwable e: ex) {
             if (e instanceof SQLException) {
