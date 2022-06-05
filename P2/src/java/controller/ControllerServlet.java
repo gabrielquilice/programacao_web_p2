@@ -18,8 +18,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/produtos",
-    "/produtoForm", "/editProdutoForm", "/excluirProduto", "/saveProdutoForm", "/findFilmByActor", "/selectFilmsByActor"})
+@WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {
+    "/produtos", "/produtoForm", "/editProdutoForm", "/excluirProduto", "/saveProdutoForm", 
+    "/vendas", "/cadastrarVendaForm",
+    "/findFilmByActor", "/selectFilmsByActor"
+})
 public class ControllerServlet extends HttpServlet {
 
     String param = "";
@@ -32,11 +35,10 @@ public class ControllerServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
+        //Produtos
         if (userPath.equals("/produtos")) {
-
             String url = "/WEB-INF/view/produtos.jsp";
             request.getRequestDispatcher(url).forward(request, response);
-
         }
         
         if (userPath.equals("/produtoForm")) {
@@ -48,6 +50,18 @@ public class ControllerServlet extends HttpServlet {
             String url = "/WEB-INF/view/editProdutoForm.jsp?id=" + request.getParameter("id");
             request.getRequestDispatcher(url).forward(request, response);
         }
+        
+        
+        //Vendas
+        if (userPath.equals("/vendas")) {
+            String url = "/WEB-INF/view/vendas.jsp";
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        
+        if (userPath.equals("/cadastrarVendaForm")) {
+            String url = "/WEB-INF/view/cadastrarVendaForm.jsp";
+            request.getRequestDispatcher(url).forward(request, response);
+        }
 
         if (userPath.equals("/findFilmByActor")) {
             String url = "/WEB-INF/view/findFilmByActor.jsp";
@@ -55,14 +69,6 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,6 +81,7 @@ public class ControllerServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/view/queryFilmsById.jsp?idPessoa=" + request.getParameter("idPessoa")).forward(request, response);
         }
 
+        //Produtos
         if (userPath.equals("/saveProdutoForm")) {
             saveProduto(request, response, out);
         }
