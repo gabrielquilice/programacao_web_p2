@@ -76,20 +76,23 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void saveProduto(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws ServletException, IOException {
-        Produto produto = new Produto();
-        produto.setNome(request.getParameter("nome"));
-        produto.setPreco(Double.valueOf(request.getParameter("preco")));
-
-        ProdutoDao dao = new ProdutoDao();
         try {
+            Produto produto = new Produto();
+            produto.setNome(request.getParameter("nome"));
+            produto.setCodigoBarras(request.getParameter("codigo_barras"));
+            produto.setQtdEstoque(Integer.parseInt(request.getParameter("qt_estoque")));
+            produto.setPreco(Double.valueOf(request.getParameter("preco")));
+            produto.setUrlImagem(request.getParameter("url_imagem"));
+
+            ProdutoDao dao = new ProdutoDao();
             dao.saveProduto(produto);
-            //codigo para passar uma confirmação de cadastro para ser exibido uma caixa de sucesso
-            request.setAttribute("p", 1); // Store products in request scope.
+            
+            request.setAttribute("p", 1);
             request.getRequestDispatcher("/WEB-INF/view/produtoForm.jsp?p=1").forward(request, response);
 
         } catch (ClassNotFoundException | SQLException ex) {
             out.println("<html>");
-            out.println("<title>Olá</title>");
+            out.println("<title>Erro</title>");
             out.println("<body>");
             out.println("<script>alert('Não foi possível salvar os dados! Verifique os Campos!');</script>");
             out.println("<a href='/WEB-INF/view/produtoForm.jsp'>Voltar ao formulário de produtos");

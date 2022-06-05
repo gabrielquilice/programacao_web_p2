@@ -9,34 +9,47 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
 public class ProdutoDao {
-     public int saveProduto(Produto produto) throws ClassNotFoundException, SQLException {
+
+    public int saveProduto(Produto produto) throws ClassNotFoundException, SQLException {
         ConexaoDao conexaoDao = new ConexaoDao();
-        
-         String INSERT_USERS_SQL = "INSERT INTO produto" +
-            "  (nome, preco) VALUES " +
-            " (?, ?);";
 
         int result = 0;
+        String sql;
 
-        try (Connection con = conexaoDao.conectar();
-            PreparedStatement preparedStatement = con.prepareStatement(INSERT_USERS_SQL)) {
-            preparedStatement.setString(1,produto.getNome());
-            preparedStatement.setDouble(2, produto.getPreco());
-           
+        if (produto.getCodigoBarras().equals("")) {
+            sql = "INSERT INTO produto(nome, qt_estoque, preco, url_imagem, fg_ativo) values (?, ?, ?, ?, 'S');";
+        } else {
+            sql = "INSERT INTO produto(nome, codigo_barras, qt_estoque, preco, url_imagem, fg_ativo) values (?, ?, ?, ?, ?, 'S');";
+        }
+
+        try ( Connection con = conexaoDao.conectar();  PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+
+            if (produto.getCodigoBarras().equals("")) {
+                preparedStatement.setString(1, produto.getNome());
+                preparedStatement.setInt(2, produto.getQtdEstoque());
+                preparedStatement.setDouble(3, produto.getPreco());
+                preparedStatement.setString(4, produto.getUrlImagem());
+            } else {
+                preparedStatement.setString(1, produto.getNome());
+                preparedStatement.setString(2, produto.getCodigoBarras());
+                preparedStatement.setInt(3, produto.getQtdEstoque());
+                preparedStatement.setDouble(4, produto.getPreco());
+                preparedStatement.setString(5, produto.getUrlImagem());
+            }
+
             result = preparedStatement.executeUpdate();
 
             conexaoDao.desconectar();
         } catch (SQLException e) {
-            // process sql exception
             printSQLException(e);
         }
+
         return result;
     }
-     
-     private void printSQLException(SQLException ex) {
-        for (Throwable e: ex) {
+
+    private void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
             if (e instanceof SQLException) {
                 e.printStackTrace(System.err);
                 System.err.println("SQLState: " + ((SQLException) e).getSQLState());
@@ -50,5 +63,5 @@ public class ProdutoDao {
             }
         }
     }
-    
+
 }
