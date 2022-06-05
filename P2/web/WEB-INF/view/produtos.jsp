@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/produtos.css" rel="stylesheet" />
         <link href="css/modals.css" rel="stylesheet" />
+        <link href="css/main.css" rel="stylesheet" />
         <title>Produtos</title>
 
         <style>
@@ -39,6 +40,16 @@
                         <div>
                             <h1>${row.nome}</h1>
                             <h2>R$ ${row.preco}</h2>
+                            <p>
+                                <span>Quantidade em estoque: ${row.qt_estoque}</span> <br />
+                                <span>Produto ativo:
+                                    <!<!-- Realiza a verificação se o produto está ativo ou não -->
+                                    <c:choose>
+                                        <c:when test = "${row.fg_ativo == 'S'}"> Sim </c:when>
+                                        <c:otherwise> Não </c:otherwise>
+                                    </c:choose>
+                                </span>
+                            </p>
                         </div>
                         <div class="botoes-container">
                             <a style="text-decoration: none" href="/P2/editProdutoForm?id=${row.idproduto}">
