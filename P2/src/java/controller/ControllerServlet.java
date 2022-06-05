@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/produtos",
-    "/produtoForm", "/editProdutoForm", "/saveProdutoForm", "/findFilmByActor", "/selectFilmsByActor"})
+    "/produtoForm", "/editProdutoForm", "/excluirProduto", "/saveProdutoForm", "/findFilmByActor", "/selectFilmsByActor"})
 public class ControllerServlet extends HttpServlet {
 
     String param = "";
@@ -78,9 +78,32 @@ public class ControllerServlet extends HttpServlet {
         if (userPath.equals("/saveProdutoForm")) {
             saveProduto(request, response, out);
         }
+        
+        if (userPath.equals("/excluirProduto")) {
+            excluirProduto(request, response, out);
+        }
 
     }
 
+    private void excluirProduto(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws ServletException, IOException {
+        try {
+            ProdutoDao dao = new ProdutoDao();
+            
+            dao.deleteProduto(Integer.parseInt(request.getParameter("id_produto")));
+            request.getRequestDispatcher("/WEB-INF/view/produtos.jsp").forward(request, response);
+        } catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
+            out.println("<html>");
+            out.println("<title>Erro</title>");
+            out.println("<body>");
+            out.println("<script>alert('Não foi possível excluir o registro!');</script>");
+            out.println("<a href='/WEB-INF/view/index.html'>Voltar para a página inicial</a>");
+            out.println("</body>");
+            out.println("</html>");
+
+            Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void saveProduto(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws ServletException, IOException {
         try {
             Produto produto = new Produto();
@@ -112,7 +135,7 @@ public class ControllerServlet extends HttpServlet {
             out.println("<title>Erro</title>");
             out.println("<body>");
             out.println("<script>alert('Não foi possível salvar os dados! Verifique os Campos!');</script>");
-            out.println("<a href='/WEB-INF/view/produtoForm.jsp'>Voltar ao formulário de produtos");
+            out.println("<a href='/WEB-INF/view/index.html'>Voltar para a página inicial</a>");
             out.println("</body>");
             out.println("</html>");
 

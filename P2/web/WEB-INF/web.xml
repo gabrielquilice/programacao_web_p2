@@ -9,6 +9,7 @@
         <url-pattern>/produtos</url-pattern>
         <url-pattern>/produtoForm</url-pattern>
         <url-pattern>/editProdutoForm</url-pattern>
+        <url-pattern>/excluirProduto</url-pattern>
         <url-pattern>/saveProdutoForm</url-pattern>
         <url-pattern>/findFilmByActor</url-pattern>
         <url-pattern>/selectFilmsByActor</url-pattern>

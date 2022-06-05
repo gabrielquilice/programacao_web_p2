@@ -73,6 +73,26 @@ public class ProdutoDao {
 
         return result;
     }
+    
+    public int deleteProduto(int idProduto) throws ClassNotFoundException, SQLException {
+        ConexaoDao conexaoDao = new ConexaoDao();
+
+        int result = 0;
+
+        String sql = "DELETE FROM produto WHERE idproduto = ?;";
+
+        try ( Connection con = conexaoDao.conectar();  PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setInt(1, idProduto);
+
+            result = preparedStatement.executeUpdate();
+
+            conexaoDao.desconectar();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+        return result;
+    }
 
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
