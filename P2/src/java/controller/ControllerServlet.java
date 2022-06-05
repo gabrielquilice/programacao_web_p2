@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {"/produtos",
-    "/produtoForm", "/saveProdutoForm", "/findFilmByActor", "/selectFilmsByActor"})
+    "/produtoForm", "/editProdutoForm", "/saveProdutoForm", "/findFilmByActor", "/selectFilmsByActor"})
 public class ControllerServlet extends HttpServlet {
 
     String param = "";
@@ -38,8 +38,14 @@ public class ControllerServlet extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
 
         }
+        
         if (userPath.equals("/produtoForm")) {
             String url = "/WEB-INF/view/produtoForm.jsp";
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        
+        if (userPath.equals("/editProdutoForm")) {
+            String url = "/WEB-INF/view/editProdutoForm.jsp?id=" + request.getParameter("id");
             request.getRequestDispatcher(url).forward(request, response);
         }
 
@@ -78,6 +84,10 @@ public class ControllerServlet extends HttpServlet {
     private void saveProduto(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws ServletException, IOException {
         try {
             Produto produto = new Produto();
+            if (!request.getParameter("novo").equalsIgnoreCase("true")) {
+                produto.setIdProduto(Integer.parseInt(request.getParameter("id_produto")));
+                produto.setFgAtivo(request.getParameter("fg_ativo"));
+            }
             produto.setNome(request.getParameter("nome"));
             produto.setCodigoBarras(request.getParameter("codigo_barras"));
             produto.setQtdEstoque(Integer.parseInt(request.getParameter("qt_estoque")));
@@ -85,10 +95,17 @@ public class ControllerServlet extends HttpServlet {
             produto.setUrlImagem(request.getParameter("url_imagem"));
 
             ProdutoDao dao = new ProdutoDao();
-            dao.saveProduto(produto);
             
-            request.setAttribute("p", 1);
-            request.getRequestDispatcher("/WEB-INF/view/produtoForm.jsp?p=1").forward(request, response);
+            if (request.getParameter("novo").equalsIgnoreCase("true")) dao.saveProduto(produto);
+            else dao.updateProduto(produto);
+            
+            if (request.getParameter("novo").equalsIgnoreCase("true")) {
+                request.setAttribute("p", 1);
+                request.getRequestDispatcher("/WEB-INF/view/produtoForm.jsp?p=1").forward(request, response);
+            } else {
+                request.getRequestDispatcher("/WEB-INF/view/produtos.jsp").forward(request, response);
+            }
+            
 
         } catch (ClassNotFoundException | SQLException ex) {
             out.println("<html>");

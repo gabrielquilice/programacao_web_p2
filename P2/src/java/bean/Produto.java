@@ -5,6 +5,7 @@
 package bean;
 
 public class Produto {
+
     private int idProduto;
     private String nome;
     private String codigoBarras;
@@ -68,5 +69,5 @@ public class Produto {
     public void setFgAtivo(String fgAtivo) {
         this.fgAtivo = fgAtivo;
     }
-    
+
 }

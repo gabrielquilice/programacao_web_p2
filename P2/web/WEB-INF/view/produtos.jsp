@@ -41,7 +41,9 @@
                             <h2>R$ ${row.preco}</h2>
                         </div>
                         <div class="botoes-container">
-                            <button type="button" class="custom-button">Editar</button>
+                            <a style="text-decoration: none" href="/P2/editProdutoForm?id=${row.idproduto}">
+                                <button type="button" class="custom-button">Editar</button>
+                            </a>
                             <button type="button" class="custom-button" onclick="showModal('modalSheet-${row.idproduto}')">Excluir</button>
                         </div>
                     </div>

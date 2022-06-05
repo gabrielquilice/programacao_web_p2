@@ -48,6 +48,32 @@ public class ProdutoDao {
         return result;
     }
 
+    public int updateProduto(Produto produto) throws ClassNotFoundException, SQLException {
+        ConexaoDao conexaoDao = new ConexaoDao();
+
+        int result = 0;
+
+        String sql = "UPDATE produto SET nome = ?, codigo_barras = ?, qt_estoque = ?, preco = ?, url_imagem = ?, fg_ativo = ? where idproduto = ?;";
+
+        try ( Connection con = conexaoDao.conectar();  PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, produto.getNome());
+            preparedStatement.setString(2, produto.getCodigoBarras());
+            preparedStatement.setInt(3, produto.getQtdEstoque());
+            preparedStatement.setDouble(4, produto.getPreco());
+            preparedStatement.setString(5, produto.getUrlImagem());
+            preparedStatement.setString(6, produto.getFgAtivo());
+            preparedStatement.setInt(7, produto.getIdProduto());
+
+            result = preparedStatement.executeUpdate();
+
+            conexaoDao.desconectar();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+        return result;
+    }
+
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {

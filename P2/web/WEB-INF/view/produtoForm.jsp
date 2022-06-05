@@ -61,8 +61,8 @@
                     </tbody>
                 </table>
                 <br />
+                <input type="hidden" value="true" name="novo" />
                 <input class="custom-button custom-button-blue" type="submit" value="Cadastrar" name="btn" />
-
             </form>
         </div>
     </body>
