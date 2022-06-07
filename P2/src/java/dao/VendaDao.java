@@ -20,8 +20,6 @@ public class VendaDao {
         String sql = "SELECT MAX(idvenda)+1 AS next_id FROM venda";
 
         try ( Connection con = conexaoDao.conectar(); PreparedStatement preparedStatement = con.prepareStatement(sql)) {
-            con.setAutoCommit(false); //não deixa salvar no banco até que mandemos salvar manualmente
-            
             //pega o próximo id da venda
             preparedStatement.executeQuery().next();
             int idVenda = preparedStatement.getResultSet().getInt("next_id");
@@ -43,14 +41,13 @@ public class VendaDao {
                 preparedStatement3.setInt(2, produtoVenda.getCodigoProduto());
                 preparedStatement3.setInt(3, produtoVenda.getQuantidade());
                 preparedStatement3.setDouble(4, produtoVenda.getPrecoProduto() * produtoVenda.getQuantidade());
+                
+                System.out.println(produtoVenda.getQuantidade());
 
                 preparedStatement3.execute();
             }
 
             result = idVenda;
-            
-            con.commit(); //depois de executar tudo e não dar erro, mandamos salvar de verdade
-            con.setAutoCommit(true); //retorna a deixar salvar automaticamente, pra poder funcionar nas outras telas
 
             conexaoDao.desconectar();
         } catch (SQLException e) {

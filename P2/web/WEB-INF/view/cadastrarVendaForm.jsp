@@ -32,8 +32,12 @@
                 text-align: center;
             }
 
-            select, input[type="text"], input[type="url"], input[type="number"] {
+            select, input[type="text"], input[type="url"] {
                 width: 20vw;
+            }
+
+            input[type="number"] {
+                width: 50%;
             }
 
             td {
@@ -46,7 +50,7 @@
         <div id="div1">
             <h1>Cadastrar venda</h1>
             <br />
-            <form method="post">
+            <form action="saveVenda" method="post">
                 <div style="width:100%; display: flex; justify-content: center;">
                     <table>
                         <tbody>
@@ -79,9 +83,23 @@
                 <div class="venda-produto-wrapper">
                     <c:forEach var="produto" items="${produtos.rows}">
                         <div class="small-card">
-                            <img src="${produto.url_imagem}" alt="imagem do produto"/>
-                            <input class="align-top" type="checkbox" name="id_produto" value="${produto.idproduto}" /> 
-                            <p>${produto.nome}</p>
+                            <div style="display: flex; flex-direction: column; width: 100%; justify-content: center; gap: 5px;">
+                                <img src="${produto.url_imagem}" alt="imagem do produto"/>
+                                <input class="align-top" type="checkbox" name="id_produto" value="${produto.idproduto}" /> 
+                                <p><b>${produto.nome}</b></p>
+                                <p><b>R$ ${produto.preco}</b></p>
+                            </div>
+                            <div style="display: flex; width: 100%; justify-content: center; gap: 5px;">
+                                <span>Qtde: </span>
+                                <input 
+                                    type="number" 
+                                    name="prods[${produto.idproduto}][qtd]" 
+                                    min="0" 
+                                    max="${produto.qt_estoque}" 
+                                    value="0" 
+                                />
+                                <input type="hidden" name="prods[${produto.idproduto}][preco]" value="${produto.preco}" />
+                            </div>
                         </div>
                         <br />
                     </c:forEach>

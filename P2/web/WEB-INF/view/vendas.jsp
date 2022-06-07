@@ -12,6 +12,11 @@
         <link href="css/produtos.css" rel="stylesheet" />
         <link href="css/main.css" rel="stylesheet" />
         <title>Vendas</title>
+        <%
+            if (request.getParameter("p") != null) {
+        %><script>alert('Venda cadastrada com sucesso!');</script><%
+            }
+        %>
 
         <style>
             #div1{

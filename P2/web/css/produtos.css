@@ -59,7 +59,7 @@
 }
 
 .venda-produto-wrapper {
-  width: 100%;
+  width: 70vw;
   min-height: 20vh;
   display: flex;
   align-items: center;
@@ -73,7 +73,7 @@
 
   overflow: hidden;
   overflow-y: scroll;
-  max-height: 100vh;
+  max-height: 120vh;
 
   /* Esconder a scrollbar */
   scrollbar-width: none;
@@ -86,7 +86,7 @@
 }
 
 .small-card {
-  height: 200px;
+  height: 280px;
   width: 200px;
 
   border: 1px solid #cecece;
@@ -97,9 +97,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 
   margin-bottom: 5px;
+  padding: 0 5px 5px 5px;
   position: relative;
 }
 

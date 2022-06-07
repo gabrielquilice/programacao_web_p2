@@ -16,6 +16,7 @@
         <!--Vendas-->
         <url-pattern>/vendas</url-pattern>
         <url-pattern>/cadastrarVendaForm</url-pattern>
+        <url-pattern>/saveVenda</url-pattern>
         
         <url-pattern>/findFilmByActor</url-pattern>
         <url-pattern>/selectFilmsByActor</url-pattern>
