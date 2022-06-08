@@ -72,7 +72,6 @@ public class ControllerServlet extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
         }
         
-        
         //Funcionários
         if (userPath.equals("/funcionarios")) {
             String url = "/WEB-INF/view/funcionarios.jsp";
@@ -285,11 +284,6 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
