@@ -53,6 +53,11 @@
   color: rgb(32, 31, 31) !important;
 }
 
+.venda-label {
+  font-weight: 600;
+  color: rgb(32, 31, 31);
+}
+
 @media (max-width: 768px) {
   .card-venda {
     width: auto;

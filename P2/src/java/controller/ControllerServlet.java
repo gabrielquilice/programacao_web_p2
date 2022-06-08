@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {
     "/produtos", "/produtoForm", "/editProdutoForm", "/excluirProduto", "/saveProdutoForm",
-    "/vendas", "/cadastrarVendaForm", "/saveVenda",
+    "/vendas", "/cadastrarVendaForm", "/saveVenda", "/infoVenda",
     "/funcionarios", "/funcionarioForm", "/editFuncionarioForm", "/excluirFuncionario", "/saveFuncionarioForm",
     "/findFilmByActor", "/selectFilmsByActor"
 })
@@ -67,6 +67,12 @@ public class ControllerServlet extends HttpServlet {
             String url = "/WEB-INF/view/cadastrarVendaForm.jsp";
             request.getRequestDispatcher(url).forward(request, response);
         }
+        
+        if (userPath.equals("/infoVenda")) {
+            String url = "/WEB-INF/view/infoVenda.jsp?id=" + request.getParameter("id");
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        
         
         //Funcionários
         if (userPath.equals("/funcionarios")) {

@@ -17,6 +17,7 @@
         <url-pattern>/vendas</url-pattern>
         <url-pattern>/cadastrarVendaForm</url-pattern>
         <url-pattern>/saveVenda</url-pattern>
+        <url-pattern>/infoVenda</url-pattern>
         
         <!--Funcionários-->
         <url-pattern>/funcionarios</url-pattern>
