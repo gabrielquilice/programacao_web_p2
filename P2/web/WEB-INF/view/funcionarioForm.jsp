@@ -23,7 +23,7 @@
                 text-align: center;
             }
 
-            input[type="text"], input[type="url"], input[type="number"] {
+            select, input[type="text"], input[type="password"], input[type="date"] {
                 width: 20vw;
             }
 
@@ -55,11 +55,9 @@
                             <td>Sexo:</td>
                             <td>
                                 <input type="radio" name="sexo" value="M" required />
-                                <label for="Choice1">M</label>
-                            </td>
-                            <td>
+                                <label for="Choice1">Masculino</label>
                                 <input type="radio" name="sexo" value="F" required />
-                                <label for="Choice2">F</label>
+                                <label for="Choice2">Feminino</label>
                             </td>
                         </tr>
                         <tr>

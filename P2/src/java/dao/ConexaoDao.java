@@ -4,11 +4,11 @@ import java.sql.*;
 
 public class ConexaoDao {
 
-    private final String ENDERECO_SERVIDOR = "localhost:3306";
+    private final String ENDERECO_SERVIDOR = "localhost:3307";
     private final String BD = "mwgames";
     private final String URL = "jdbc:mysql://" + ENDERECO_SERVIDOR + "/" + BD;
     private final String USUARIO = "root";
-    private final String SENHA = "19072021";
+    private final String SENHA = "mysql";
 
     private Connection connection;
 

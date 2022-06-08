@@ -2,14 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<sql:query var="rs" dataSource="jdbc/mwgames">
-    select count(*) as total_vendas from venda 
+<sql:query var="vendas" dataSource="jdbc/mwgames">
+    select idvenda, sum(quantidade) as qt_itens, data_venda, preco_venda from relatorio_venda group by idvenda order by idvenda
 </sql:query>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/produtos.css" rel="stylesheet" />
+        <link href="css/vendas.css" rel="stylesheet" />
         <link href="css/main.css" rel="stylesheet" />
         <title>Vendas</title>
         <%
@@ -27,16 +27,22 @@
 
             .content {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 min-height: 50vh; /* 65% da altura da tela */
                 width: 100%;
+                gap: 10px;
+                flex-wrap: wrap;
             }
 
             .content h4 {
                 color: #6b6b6b;
                 animation: greetings 1.75s ease 0s 1 normal forwards; /* criando a animação de entrada */
+            }
+
+            .content a {
+                text-decoration: none;
+                color: var(--bs-body-color); /* pega a cor definida no tema do bootstrap */
             }
         </style>
     </head>
@@ -53,11 +59,29 @@
 
             <div class="content">
                 <c:choose>
-                    <c:when test = "${rs.rows[0].total_vendas == 0}">
+                    <c:when test = "${vendas.getRowCount() == 0}">
                         <h4>Não há vendas cadastradas!</h4>
                     </c:when>
                     <c:otherwise>
-                        <h4>Há vendas ${rs.rows[0].total_vendas} cadastradas!</h4>
+                        <c:forEach var="venda" items="${vendas.rows}">
+                            <a href="/P2/infoVenda?id=${venda.idvenda}" target="_blank">
+                                <div class="card-venda">
+                                    <div class="info">
+                                        <div>
+                                            <h1>Venda #${venda.idvenda}</h1>
+                                            <h2>Total: R$ ${venda.preco_venda}</h2>
+                                            <p>
+                                                <span>Total de itens: ${venda.qt_itens}</span>
+                                                <br />
+                                                <span>
+                                                    Realizada em: ${venda.data_venda}
+                                                </span> 
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </c:forEach>
                     </c:otherwise>
                 </c:choose>
             </div>
