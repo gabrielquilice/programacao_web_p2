@@ -26,8 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {
     "/produtos", "/produtoForm", "/editProdutoForm", "/excluirProduto", "/saveProdutoForm",
     "/vendas", "/cadastrarVendaForm", "/saveVenda", "/infoVenda",
-    "/funcionarios", "/funcionarioForm", "/editFuncionarioForm", "/excluirFuncionario", "/saveFuncionarioForm",
-    "/findFilmByActor", "/selectFilmsByActor"
+    "/funcionarios", "/funcionarioForm", "/editFuncionarioForm", "/excluirFuncionario", "/saveFuncionarioForm"
 })
 public class ControllerServlet extends HttpServlet {
 
@@ -89,11 +88,6 @@ public class ControllerServlet extends HttpServlet {
             String url = "/WEB-INF/view/editFuncionarioForm.jsp?id=" + request.getParameter("id");
             request.getRequestDispatcher(url).forward(request, response);
         }
-        
-        if (userPath.equals("/findFilmByActor")) {
-            String url = "/WEB-INF/view/findFilmByActor.jsp";
-            request.getRequestDispatcher(url).forward(request, response);
-        }
     }
 
     @Override
@@ -104,9 +98,6 @@ public class ControllerServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String userPath = request.getServletPath();
-        if (userPath.equals("/selectFilmsByActor")) {
-            request.getRequestDispatcher("/WEB-INF/view/queryFilmsById.jsp?idPessoa=" + request.getParameter("idPessoa")).forward(request, response);
-        }
 
         //Produtos
         if (userPath.equals("/saveProdutoForm")) {
@@ -116,7 +107,8 @@ public class ControllerServlet extends HttpServlet {
         if (userPath.equals("/excluirProduto")) {
             excluirProduto(request, response, out);
         }
-
+        
+        //Vendas
         if (userPath.equals("/saveVenda")) {
             saveVenda(request, response, out);
         }

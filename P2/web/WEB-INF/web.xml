@@ -25,10 +25,6 @@
         <url-pattern>/editFuncionarioForm</url-pattern>
         <url-pattern>/excluirFuncionario</url-pattern>
         <url-pattern>/saveFuncionarioForm</url-pattern>
-        
-        
-        <url-pattern>/findFilmByActor</url-pattern>
-        <url-pattern>/selectFilmsByActor</url-pattern>
     </servlet-mapping>
    
     <session-config>
