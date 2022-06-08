@@ -18,6 +18,14 @@
         <url-pattern>/cadastrarVendaForm</url-pattern>
         <url-pattern>/saveVenda</url-pattern>
         
+        <!--Funcionários-->
+        <url-pattern>/funcionarios</url-pattern>
+        <url-pattern>/funcionarioForm</url-pattern>
+        <url-pattern>/editFuncionarioForm</url-pattern>
+        <url-pattern>/excluirFuncionario</url-pattern>
+        <url-pattern>/saveFuncionarioForm</url-pattern>
+        
+        
         <url-pattern>/findFilmByActor</url-pattern>
         <url-pattern>/selectFilmsByActor</url-pattern>
     </servlet-mapping>

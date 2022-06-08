@@ -4,14 +4,15 @@
  */
 package controller;
 
+import bean.Funcionario;
 import bean.Produto;
 import bean.ProdutoVenda;
+import dao.FuncionarioDao;
 import dao.ProdutoDao;
 import dao.VendaDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ControllerServlet", loadOnStartup = 1, urlPatterns = {
     "/produtos", "/produtoForm", "/editProdutoForm", "/excluirProduto", "/saveProdutoForm",
     "/vendas", "/cadastrarVendaForm", "/saveVenda",
+    "/funcionarios", "/funcionarioForm", "/editFuncionarioForm", "/excluirFuncionario", "/saveFuncionarioForm",
     "/findFilmByActor", "/selectFilmsByActor"
 })
 public class ControllerServlet extends HttpServlet {
@@ -65,7 +67,23 @@ public class ControllerServlet extends HttpServlet {
             String url = "/WEB-INF/view/cadastrarVendaForm.jsp";
             request.getRequestDispatcher(url).forward(request, response);
         }
+        
+        //Funcionários
+        if (userPath.equals("/funcionarios")) {
+            String url = "/WEB-INF/view/funcionarios.jsp";
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        
+        if (userPath.equals("/funcionarioForm")) {
+            String url = "/WEB-INF/view/funcionarioForm.jsp";
+            request.getRequestDispatcher(url).forward(request, response);
+        }
 
+        if (userPath.equals("/editFuncionarioForm")) {
+            String url = "/WEB-INF/view/editFuncionarioForm.jsp?id=" + request.getParameter("id");
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        
         if (userPath.equals("/findFilmByActor")) {
             String url = "/WEB-INF/view/findFilmByActor.jsp";
             request.getRequestDispatcher(url).forward(request, response);
@@ -96,7 +114,15 @@ public class ControllerServlet extends HttpServlet {
         if (userPath.equals("/saveVenda")) {
             saveVenda(request, response, out);
         }
+        
+        //Funcionários
+        if (userPath.equals("/saveFuncionarioForm")) {
+            saveFuncionario(request, response, out);
+        }
 
+        if (userPath.equals("/excluirFuncionario")) {
+            excluirFuncionario(request, response, out);
+        }
     }
 
     private void excluirProduto(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws ServletException, IOException {
@@ -158,7 +184,71 @@ public class ControllerServlet extends HttpServlet {
             Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void saveFuncionario(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws ServletException, IOException {
+        try {
+            Funcionario funcionario = new Funcionario();
+            if (!request.getParameter("novo").equalsIgnoreCase("true")) {
+                funcionario.setIdFuncionario(Integer.parseInt(request.getParameter("idfuncionario")));
+                funcionario.setFg_ativo(request.getParameter("fg_ativo"));
+            }
+            funcionario.setNome(request.getParameter("nome"));
+            funcionario.setCpf(request.getParameter("cpf"));
+            funcionario.setRg(request.getParameter("rg"));
+            funcionario.setSexo(request.getParameter("sexo"));
+            funcionario.setData_nascimento(request.getParameter("data_nascimento"));
+            funcionario.setSys_user(request.getParameter("sys_user"));
+            funcionario.setSys_password(request.getParameter("sys_password"));
+            
+            System.out.println(funcionario);
+            FuncionarioDao dao = new FuncionarioDao();
 
+            if (request.getParameter("novo").equalsIgnoreCase("true")) {
+                dao.saveFuncionario(funcionario);
+            } else {
+                dao.updateFuncionario(funcionario);
+            }
+
+            if (request.getParameter("novo").equalsIgnoreCase("true")) {
+                request.setAttribute("p", 1);
+                request.getRequestDispatcher("/WEB-INF/view/funcionarioForm.jsp?p=1").forward(request, response);
+            } else {
+                request.getRequestDispatcher("/WEB-INF/view/funcionarios.jsp").forward(request, response);
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            out.println("<html>");
+            out.println("<title>Erro</title>");
+            out.println("<body>");
+            out.println("<script>alert('Não foi possível salvar os dados! Verifique os Campos!');</script>");
+            out.println("<a href='/P2'>Voltar para a página inicial</a>");
+            out.println("</body>");
+            out.println("</html>");
+
+            Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void excluirFuncionario(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws ServletException, IOException {
+        try {
+            FuncionarioDao dao = new FuncionarioDao();
+
+            dao.deleteFuncionario(Integer.parseInt(request.getParameter("idfuncionario")));
+            request.getRequestDispatcher("/WEB-INF/view/funcionarios.jsp?p=1").forward(request, response);
+            
+        } catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
+            out.println("<html>");
+            out.println("<title>Erro</title>");
+            out.println("<body>");
+            out.println("<script>alert('Não foi possível excluir o registro!');</script>");
+            out.println("<a href='/P2'>Voltar para a página inicial</a>");
+            out.println("</body>");
+            out.println("</html>");
+
+            Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void saveVenda(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws ServletException, IOException {
         try {
             List<ProdutoVenda> listaProdutos = new ArrayList<>();

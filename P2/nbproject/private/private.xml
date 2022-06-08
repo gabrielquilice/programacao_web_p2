@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/gabri/Projetos/Fatec/trabalhos/programacao_web_p2/P2/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/gabri/Projetos/Fatec/trabalhos/programacao_web_p2/P2/src/java/controller/ControllerServlet.java</file>
-            <file>file:/C:/Users/gabri/Projetos/Fatec/trabalhos/programacao_web_p2/P2/src/java/dao/VendaDao.java</file>
+            <file>file:/C:/Users/jmari/Desktop/programacao_web_p2/P2/web/WEB-INF/view/funcionarios.jsp</file>
+            <file>file:/C:/Users/jmari/Desktop/programacao_web_p2/P2/web/WEB-INF/view/funcionarioForm.jsp</file>
+            <file>file:/C:/Users/jmari/Desktop/programacao_web_p2/P2/web/index.html</file>
+            <file>file:/C:/Users/jmari/Desktop/programacao_web_p2/P2/src/java/controller/ControllerServlet.java</file>
+            <file>file:/C:/Users/jmari/Desktop/programacao_web_p2/P2/web/WEB-INF/view/cadastrarVendaForm.jsp</file>
         </group>
     </open-files>
 </project-private>
